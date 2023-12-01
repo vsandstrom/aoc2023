@@ -28,30 +28,8 @@ fn task1(input: Vec<String>) -> i32 {
 }
 
 
-fn task2(input: Vec<String>) -> i32 {
-  let hm =  HashMap::from([
-    ("1", 1),
-    ("one", 1),
-    ("2", 2),
-    ("two", 2),
-    ("3", 3),
-    ("three", 3),
-    ("4", 4),
-    ("four", 4),
-    ("5", 5), 
-    ("five", 5), 
-    ("6", 6),
-    ("six", 6),
-    ("7", 7),
-    ("seven", 7),
-    ("8", 8),
-    ("eight", 8),
-    ("9", 9),
-    ("nine", 9),
-  ]);
-
+fn task2(input: Vec<String>, hm: HashMap<&str, i32>) -> i32 {
   let mut sum = 0;
-
   let re = match Regex::new(r"one|two|three|four|five|six|seven|eight|nine|[0-9]") {
     Ok(re) => re,
     Err(e) => panic!("{}", e)
@@ -79,45 +57,34 @@ fn task2(input: Vec<String>) -> i32 {
 fn main() {
     let data = fs::read_to_string("./input").unwrap();
     let input = parser(data);
-    let sum = task1(input.clone());
-    println!("task1: {}", sum);
-    
-    let x: Vec<String> = Vec::from([
-      "two1nine".to_string(),
-      "eightwothree".to_string(),
-      "abcone2threexyz".to_string(),
-      "xtwone3four".to_string(),
-      "4nineeightseven2".to_string(),
-      "zoneight234".to_string(),
-      "7pqrstsixteen".to_string()
-    ]);
+    println!("task1: {}", task1(input.clone()));
 
-    println!("task2: {}", task2(input));
+    let hm =  HashMap::from([ 
+      ("1", 1),
+      ("one", 1),
+      ("2", 2),
+      ("two", 2),
+      ("3", 3),
+      ("three", 3),
+      ("4", 4),
+      ("four", 4),
+      ("5", 5), 
+      ("five", 5), 
+      ("6", 6),
+      ("six", 6),
+      ("7", 7),
+      ("seven", 7),
+      ("8", 8),
+      ("eight", 8),
+      ("9", 9),
+      ("nine", 9),
+    ]);
+    
+    println!("task2: {}", task2(input, hm));
 }
 
 #[allow(unused)]
-fn task2_notworking(mut input: Vec<String>) -> i32 {
-  let hm =  HashMap::from([
-    ("1", 1),
-    ("one", 1),
-    ("2", 2),
-    ("two", 2),
-    ("3", 3),
-    ("three", 3),
-    ("4", 4),
-    ("four", 4),
-    ("5", 5), 
-    ("five", 5), 
-    ("6", 6),
-    ("six", 6),
-    ("7", 7),
-    ("seven", 7),
-    ("8", 8),
-    ("eight", 8),
-    ("9", 9),
-    ("nine", 9),
-  ]);
-
+fn task2_notworking(mut input: Vec<String>, hm: HashMap<&str, i32>) -> i32 {
   let mut idx: Vec<(usize, usize)> = vec!();
   let mut sum = 0;
 
@@ -238,8 +205,29 @@ mod tests {
       "zoneight234".to_string(),
       "7pqrstsixteen".to_string()
     ]);
+    let hs =  HashMap::from([
+      ("1", 1),
+      ("one", 1),
+      ("2", 2),
+      ("two", 2),
+      ("3", 3),
+      ("three", 3),
+      ("4", 4),
+      ("four", 4),
+      ("5", 5), 
+      ("five", 5), 
+      ("6", 6),
+      ("six", 6),
+      ("7", 7),
+      ("seven", 7),
+      ("8", 8),
+      ("eight", 8),
+      ("9", 9),
+      ("nine", 9),
+    ]);
 
-    let sum = task2(x);
+
+    let sum = task2(x, hs);
     assert_eq!(281, sum)
   }
 }
