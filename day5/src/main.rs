@@ -6,8 +6,24 @@ fn main() {
   let mut seeds = parse_seeds(&data[0].to_owned());
   let conv = parse_conversions(data[1..].to_owned());
 
-  println!("{}", task1(seeds, conv));
+
+  println!("seedslen: {}", seeds.len());
+  println!("{}", task1(seeds.clone(), conv.clone()));
+
+
+
+  let mut seeds2 = vec!();
+
+  for seedrange in seeds.chunks(2) {
+    for i in 0..seedrange[1] {
+      seeds2.push(seedrange[0]+i);
+    }
+  }
+  println!("seeds2len: {}", seeds2.len());
+  println!("{}", task1(seeds2, conv));
 }
+
+
 
 fn task1(seeds: Vec<i64>, conv: Vec<Vec<i64>>) -> i64 {
   let mut transform: Vec<usize> = Vec::with_capacity(seeds.len());
@@ -136,6 +152,23 @@ mod tests {
     let conv = parse_conversions(data[1..].to_owned());
 
     assert_eq!(35, task1(seeds, conv));
+  }
+
+  #[test]
+  fn task2_test() {
+    let data = parser("./test");
+    let mut seeds = parse_seeds(&data[0].to_owned());
+    let conv = parse_conversions(data[1..].to_owned());
+
+    let mut seeds2 = vec!();
+
+    for seedrange in seeds.chunks(2) {
+      for i in 0..seedrange[1] {
+        seeds2.push(seedrange[0]+i);
+      }
+    }
+
+    assert_eq!(46, task1(seeds2, conv));
 
   }
 }
