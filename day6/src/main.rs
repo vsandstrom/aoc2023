@@ -1,6 +1,10 @@
+use std::time::Instant;
+
 fn main() {
   let input = parser("./input");
+  let now = Instant::now();
   println!("{}", task1(input.clone()));
+  println!("task1 dur: {:?}", now.elapsed());
 
   let timestr = &input[0..(input.len()/2)];
   let recordstr = &input[input.len()/2..];
@@ -10,16 +14,20 @@ fn main() {
     .map(|n| n.to_string())
     .collect::<Vec<String>>()
     .join("")
-    .parse::<i64>();
+    .parse::<i64>()
+    .unwrap();
 
   let record = recordstr
     .iter()
     .map(|n| n.to_string())
     .collect::<Vec<String>>()
     .join("")
-    .parse::<i64>();
+    .parse::<i64>()
+    .unwrap();
 
-  println!("{}", task2(time.unwrap(), record.unwrap()));
+  let now = Instant::now();
+  println!("{}", task2(time, record));
+  println!("task2 dur: {:?}", now.elapsed())
 }
 
 fn parser(path: &str) -> Vec<i32> {
