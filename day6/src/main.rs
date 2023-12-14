@@ -1,7 +1,25 @@
 fn main() {
   let input = parser("./input");
-  println!("{}", task1(input))
+  println!("{}", task1(input.clone()));
 
+  let timestr = &input[0..(input.len()/2)];
+  let recordstr = &input[input.len()/2..];
+
+  let time = timestr
+    .iter()
+    .map(|n| n.to_string())
+    .collect::<Vec<String>>()
+    .join("")
+    .parse::<i64>();
+
+  let record = recordstr
+    .iter()
+    .map(|n| n.to_string())
+    .collect::<Vec<String>>()
+    .join("")
+    .parse::<i64>();
+
+  println!("{}", task2(time.unwrap(), record.unwrap()));
 }
 
 fn parser(path: &str) -> Vec<i32> {
@@ -13,6 +31,19 @@ fn parser(path: &str) -> Vec<i32> {
       _ => None
     }
   ).collect::<Vec<i32>>()
+}
+
+fn task2(time: i64, record: i64) -> i64 {
+  let mut i = 0;
+  loop{
+    let val = i * (time - i);
+    let nr = val;
+    if nr > record {
+      break;
+    }
+    i += 1;
+  }
+  (time - (i*2 - 1)) as i64
 }
 
 fn task1(input: Vec<i32>) -> i64 {
